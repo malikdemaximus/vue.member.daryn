@@ -1,0 +1,448 @@
+<script>
+// import simplebar from "simplebar-vue";
+import i18n from "../i18n";
+
+export default {
+  data() {
+    return {
+      languages: [
+        {
+          flag: require("@/assets/images/flags/us.jpg"),
+          language: "en",
+          title: "English"
+        },
+        {
+          flag: require("@/assets/images/flags/french.jpg"),
+          language: "fr",
+          title: "French"
+        },
+        {
+          flag: require("@/assets/images/flags/spain.jpg"),
+          language: "es",
+          title: "spanish"
+        },
+        {
+          flag: require("@/assets/images/flags/chaina.png"),
+          language: "zh",
+          title: "Chinese"
+        },
+        {
+          flag: require("@/assets/images/flags/arabic.png"),
+          language: "ar",
+          title: "Arabic"
+        }
+      ],
+      current_language: "en"
+    };
+  },
+  // components: { simplebar },
+  methods: {
+    toggleMenu() {
+      this.$parent.toggleMenu();
+    },
+    initFullScreen() {
+      document.body.classList.toggle("fullscreen-enable");
+      if (
+        !document.fullscreenElement &&
+        /* alternative standard method */ !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement
+      ) {
+        // current working methods
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen(
+            Element.ALLOW_KEYBOARD_INPUT
+          );
+        }
+      } else {
+        if (document.cancelFullScreen) {
+          document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        }
+      }
+    },
+    toggleRightSidebar() {
+      this.$parent.toggleRightSidebar();
+    },
+    setLanguage(locale) {
+      i18n.locale = locale;
+      this.current_language = i18n.locale;
+    }
+  }
+};
+</script>
+
+<template>
+  <header id="page-topbar">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box">
+          <a href="/" class="logo">
+            <div>
+                <span class="logo-sm">
+              <img src="@/assets/images/logo-new.svg" alt height="22" />
+            </span>
+                <span class="logo-lg">
+              <img src="@/assets/images/logo-new.svg" alt height="40" />
+            </span>
+            </div>
+              <h2>Daryn.online</h2>
+          </a>
+<!--
+          <a href="/" class="logo">
+              <div>
+                  <span class="logo-sm">
+                    <img src="@/assets/images/logo-new.svg" alt height="22" />
+                  </span>
+                  <span class="logo-lg">
+                    <img src="@/assets/images/logo-new.svg" alt height="40" />
+                  </span>
+              </div>
+              <h2>Daryn.online</h2>
+          </a>-->
+        </div>
+
+        <button
+          @click="toggleMenu"
+          type="button"
+          class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+          id="vertical-menu-btn"
+        >
+          <i class="ri-menu-2-line align-middle"></i>
+        </button>
+
+        <!-- App Search-->
+        <!--<form class="app-search d-none d-lg-block">
+          <div class="position-relative">
+            <input type="text" class="form-control" :placeholder="$t('navbar.search.text')" />
+            <span class="ri-search-line"></span>
+          </div>
+        </form>-->
+
+        <!--<b-dropdown
+          variant="black"
+          class="dropdown-mega d-none d-lg-block ml-2"
+          toggle-class="header-item"
+          menu-class="dropdown-megamenu"
+        >
+          <template v-slot:button-content>
+            {{ $t('navbar.dropdown.megamenu.text') }}
+            <i class="mdi mdi-chevron-down"></i>
+          </template>
+          <div class="row">
+            <div class="col-sm-8">
+              <div class="row">
+                <div class="col-md-4">
+                  <h5 class="font-size-14 mt-0">{{ $t('navbar.dropdown.megamenu.uicontent.title') }}</h5>
+                  <ul class="list-unstyled megamenu-list">
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.lightbox') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.rangeslider') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.sweetalert') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.rating') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.forms') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.tables') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.charts') }}</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-md-4">
+                  <h5
+                    class="font-size-14 mt-0"
+                  >{{ $t('navbar.dropdown.megamenu.application.title') }}</h5>
+                  <ul class="list-unstyled megamenu-list">
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.ecommerce') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.calendar') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.email') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.projects') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.tasks') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.application.list.contacts') }}</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-md-4">
+                  <h5
+                    class="font-size-14 mt-0"
+                  >{{ $t('navbar.dropdown.megamenu.extrapages.title') }}</h5>
+                  <ul class="list-unstyled megamenu-list">
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.lightsidebar') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.compactsidebar') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.horizontallayout') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.maintenance') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.comingsoon') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.timeline') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.extrapages.list.faqs') }}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="row">
+                <div class="col-sm-6">
+                  <h5 class="font-size-14 mt-0">{{ $t('navbar.dropdown.megamenu.uicontent.title') }}</h5>
+                  <ul class="list-unstyled megamenu-list">
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.lightbox') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.rangeslider') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.sweetalert') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.rating') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.forms') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.tables') }}</a>
+                    </li>
+                    <li>
+                      <a
+                        href="javascript:void(0);"
+                      >{{ $t('navbar.dropdown.megamenu.uicontent.list.charts') }}</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="col-sm-5">
+                  <div>
+                    <img
+                      src="@/assets/images/megamenu-img.png"
+                      alt
+                      class="img-fluid mx-auto d-block"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </b-dropdown>-->
+      </div>
+
+        <div class="d-flex">
+            <a href="#" class="menu-link">Сабақтар</a>
+            <a href="#" class="menu-link">Курстар</a>
+            <a href="#" class="menu-link">Байқау тесті</a>
+            <a href="#" class="menu-link">Репетитор</a>
+            <a href="#" class="menu-link">PIRLS 2021</a>
+        </div>
+
+      <div class="d-flex">
+        <div class="dropdown d-inline-block d-lg-none ml-2">
+          <button
+            type="button"
+            class="btn header-item noti-icon waves-effect"
+            id="page-header-search-dropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="ri-search-line"></i>
+          </button>
+          <div
+            class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+            aria-labelledby="page-header-search-dropdown"
+          >
+            <form class="p-3">
+              <div class="form-group m-0">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search ..." />
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">
+                      <i class="ri-search-line"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <b-dropdown
+          right
+          variant="black"
+          toggle-class="header-item"
+          class="d-inline-block user-dropdown"
+        >
+          <template v-slot:button-content>
+            <img
+              class="rounded-circle header-profile-user"
+              src="@/assets/images/users/avatar-2.jpg"
+              alt="Header Avatar"
+            />
+            <span class="d-none d-xl-inline-block ml-1">{{ $t('navbar.dropdown.kevin.text')}}</span>
+            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+          </template>
+          <!-- item-->
+          <a class="dropdown-item" href="#">
+            <i class="ri-user-line align-middle mr-1"></i>
+            Профиль
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="ri-lock-unlock-line align-middle mr-1"></i>
+            Құпия сөзді ауыстыру
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-danger" href="/logout">
+            <i class="ri-shut-down-line align-middle mr-1 text-danger"></i>
+            Шығу
+          </a>
+        </b-dropdown>
+
+          <b-dropdown variant="white" right toggle-class="header-item">
+              <template v-slot:button-content>
+                  <img class src="@/assets/images/flags/us.jpg" alt="Header Language" height="16" />
+              </template>
+              <b-dropdown-item
+                      class="notify-item"
+                      v-for="(entry, i) in languages"
+                      :key="`Lang${i}`"
+                      :value="entry"
+                      @click="setLanguage(entry.language)"
+                      :link-class="{'active': entry.language === current_language}"
+              >
+                  <img :src="`${entry.flag}`" alt="user-image" class="mr-1" height="12" />
+                  <span class="align-middle">{{ entry.title }}</span>
+              </b-dropdown-item>
+          </b-dropdown>
+
+        <div class="dropdown d-inline-block">
+          <button
+            type="button"
+            class="btn header-item noti-icon right-bar-toggle waves-effect toggle-right"
+            @click="toggleRightSidebar"
+          >
+            <i class="ri-settings-2-line toggle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+</template>
+
+<style lang="scss" scoped>
+.notify-item {
+  .active {
+    color: #16181b;
+    background-color: #f8f9fa;
+  }
+}
+
+    .logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h2 {
+            color: rgba(0,0,0,.9);
+            font-weight: 300;
+            font-size: 24px;
+            margin: 0;
+            padding-left: 10px;
+        }
+    }
+
+    .menu-link {
+        margin: 0 15px;
+    }
+</style>
